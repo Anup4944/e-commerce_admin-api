@@ -1,6 +1,12 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from 'express';
 const app = express();
 import morgan from 'morgan';
+
+import mongoClient from "./config/db.js";
+mongoClient();
 
 
 import cors from 'cors';
@@ -37,6 +43,7 @@ app.use((req,res,next) =>{   // throwing an error
 
 /// handle error
 import { handleError } from "./utils/errorHandler.js";
+
 app.use((error,req,res,next) =>{
   handleError(error,res);
 
