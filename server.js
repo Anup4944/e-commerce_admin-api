@@ -15,27 +15,27 @@ const PORT= process.env.PORT || 8000
 app.use(cors());
 app.use(morgan("tiny"));
 
-
+// LOAD ROUTERS
 import loginRouter from "./routers/login.router.js";
-
-app.use(express.urlencoded({ extended: false }))
- 
-// parse application/json
-app.use(express.json())
-
+import categoryRouter from "./routers/Category.router.js";
 
 
 //  USE API'S
 app.use('/api/v1/login', loginRouter); 
+app.use('/api/v1/category', categoryRouter);
  
 app.get('/', function (req, res) {
   console.log(req.body)
   res.send('Hello World')
 })
+app.use(express.urlencoded({ extended: false }))
+ 
+// parse application/json
+app.use(express.json())
 
 //404 error
 app.use((req,res,next) =>{   // throwing an error
-  const error = new error("resources not found")
+  const error = new Error("resources not found")
   error.status = 404;
   next(error);
 
