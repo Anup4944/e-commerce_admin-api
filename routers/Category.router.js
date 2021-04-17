@@ -1,7 +1,8 @@
 import express from 'express' ; 
 const router = express.Router()
+import slugify from "slugify";
 
-import { getCategory, insertCategory } from "../models/category/Category.model.js";
+import { getCategory, insertCategory, deleteCategory } from "../models/category/Category.model.js";
 
 router.all("*", (req,res,next) =>{
     next()
@@ -13,7 +14,7 @@ try {
     const result = await getCategory()
     res.json({
         status: 'success',
-        message: 'Fetching success',
+        message: 'Fetching success.',
         result,
     })
     
@@ -24,14 +25,47 @@ try {
 }
 })
 
-router.post("/", async (req,res) =>{
-    console.log(req.body)
+router.post("/", async (req, res) =>{
+    console.log(">>>>", req.body)
+
+    const {name, parentCat} = req.body
+
 
     try {
-        const result = await insertCategory(req.body)
+        const newCat = {
+            name,
+            slug: slugify(name, {lower: true}),
+            parentCat
+        } 
+
+        const result = await insertCategory(newCat)
         res.json({
             status: 'success',
-            message: 'Fetching success',
+            message: 'Category has been added',
+            result,
+        })
+        
+    } catch (error) {
+        console.log(error);
+        throw new Error(error.message);
+        
+    }
+})
+
+
+router.delete("/", async (req, res) =>{
+    console.log(">>>>", req.body)
+
+    const {name, parentCat} = req.body
+    const catIds = [];
+
+
+    try {
+
+        const result = await deleteCategory(catIds)
+        res.json({
+            status: 'success',
+            message: 'Category has been delted',
             result,
         })
         

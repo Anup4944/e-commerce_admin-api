@@ -1,7 +1,7 @@
-import  CategorySchema  from "./Category.schema.js";
+import  CategorySchema  from "./Categoryt.schema.js";
 
 
-export const insertCategory = catObj  =>{
+export const insertCategory = prodObj  =>{
 return new Promise(async(resolve, reject) => {
     try {
        const result =  await CategorySchema(catObj).save()
@@ -21,6 +21,21 @@ export const getCategory = ()  =>{
             
         } catch (error) {
             reject(error)
+            
+        }
+    })
+}
+
+export const deleteCategory = catArg  =>{
+    return new Promise(async(resolve, reject) => {
+        try {
+           const result =  await CategorySchema.deleteMany({
+            $in:$catArg
+           })
+         
+        resolve(result);    
+        } catch (error) {
+            reject(error);
             
         }
     })
