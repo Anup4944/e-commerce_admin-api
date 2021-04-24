@@ -26,12 +26,25 @@ Content-Type: application/json
 {"name" : "Root Category" , "parentCat" :0 }
 
 ### Product APIS ###
-### Add new product
+### fetch all products
+GET http://localhost:8000/api/v1/product
 
+#### fetch single product
+GET http://localhost:8000/api/v1/product/607a78dc63f3140648f5eecd
+
+
+###
 POST http://localhost:8000/api/v1/product
 Content-Type: application/json
 
 {"name" : "Root Category" , 
 "price" :0
  }
+
+### fetch single product 
+PUT http://localhost:8000/api/v1/product
+Content-Type: application/json
+
+{"_id": "607a78dc63f3140648f5eecd"}
+ 
 

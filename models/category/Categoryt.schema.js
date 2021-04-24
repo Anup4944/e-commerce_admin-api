@@ -26,7 +26,7 @@ export const CategorySchema = mongoose.Schema({
 
 );
 
-const CatSchema = mongoose.model("Category", CategorySchema)
+const CatSchema = mongoose.model("Categpory", CategorySchema)
 export default CatSchema;
 
 

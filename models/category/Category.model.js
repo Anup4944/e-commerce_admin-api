@@ -30,12 +30,28 @@ export const deleteCategory = catArg  =>{
     return new Promise(async(resolve, reject) => {
         try {
            const result =  await CategorySchema.deleteMany({
-            $in:$catArg
+               _id:{ $in: catArg}
+           
            })
          
         resolve(result);    
         } catch (error) {
             reject(error);
+            
+        }
+    })
+}
+
+
+
+export const updateCategory = ({_id, ...catData})  =>{
+    return new Promise(async(resolve, reject) => {
+        try {
+           const result =  await CategorySchema.findByIdAndUpdate({_id},{$set:catData},{new:true})
+           resolve(result)
+            
+        } catch (error) {
+            reject(error)
             
         }
     })

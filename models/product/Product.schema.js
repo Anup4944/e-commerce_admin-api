@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 
 export const ProductSchema = mongoose.Schema({
+    status: {
+        type: Boolean ,
+        require: true ,
+        default: false, 
+    },
+     
     name: {
         type: String ,
         require: true ,
@@ -28,7 +34,7 @@ export const ProductSchema = mongoose.Schema({
         type: String ,
     },
 
-    quantaty: {
+    qty: {
         type: Number ,
         require: true ,
         default: 0,
@@ -48,7 +54,7 @@ export const ProductSchema = mongoose.Schema({
         type: Array
     },
 
-    category: {
+    categories: {
         type: Array
     },
 
