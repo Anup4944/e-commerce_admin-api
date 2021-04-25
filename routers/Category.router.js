@@ -1,7 +1,7 @@
 import express from 'express' ; 
 const router = express.Router()
 import slugify from "slugify";
-import { updateCategoryValidation } from "../middlewares/formValidation";
+//    
 
 import { getCategory, insertCategory, deleteCategory } from "../models/category/Category.model.js";
 

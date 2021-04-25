@@ -3,12 +3,26 @@
 GET http://localhost:8000
 
 ### login api end point
-POST http://localhost:8000/api/v1/login
+POST   http://localhost:8000/api/v1/login
 Content-Type: application/json
 
 {
-    "email": "test@email.com",
-    "password": "12345"
+    "email": "aaa@gmail.com",
+    "password": "12345",
+    
+}
+
+###login api end point
+PUT  http://localhost:8000/api/v1/login
+Content-Type: application/json
+
+{
+    "email": "aaa@mail.com",
+    "password": "12345",
+    "fname":"Anup",
+    "lname": "Poudel",
+    "role": "admin"
+    
 }
 
 ### Category ###

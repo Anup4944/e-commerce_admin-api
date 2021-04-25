@@ -12,6 +12,11 @@ export const UserSchema = mongoose.Schema({
         required: true,
         default: ""
     },
+    role:{
+        type: String,
+        required: true,
+        default: "guest"
+    },
     email:{
         type: String,
         required: true,
@@ -21,6 +26,19 @@ export const UserSchema = mongoose.Schema({
         type: String,
         required: true,
         default: ""
+    },
+    refreshJWT:{
+        token :{
+        type: String,
+        required: true,
+        default: ""
+
+        },
+        addedAt:{
+            type: Date,
+            default: Date.row()
+        
+        }
     }
 
 },
@@ -28,5 +46,5 @@ export const UserSchema = mongoose.Schema({
     timestamp: true, 
 });
 
- const AdminUsersSchema = mongoose.model("Admin_user", UserSchema);
- export default AdminUsersSchema;
+ const UsersSchema = mongoose.model("User", UserSchema);
+ export default UsersSchema;

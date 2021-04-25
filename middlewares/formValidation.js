@@ -2,7 +2,7 @@ import joi from "joi";
 const shortStr = joi.string().max(100);
 const longStr = joi.string().max(2000);
 const email = joi.string().min(3).max(50).required();
-const password = joi.string().required();
+const password = joi.string().max(50).required();
 const date = joi.date().allow(null).allow("");
 const num = joi.number();
 const args = joi.array();
@@ -28,6 +28,35 @@ if(value.error){
 
 next();
 }
+
+
+
+
+export const newUserValidation = (req,res,next) => {
+
+
+  const schema = joi.object({
+    fname:shortStr.required(),
+    lname: shortStr.required(),
+    role: shortStr, 
+    email,
+    password, })
+  
+  
+  /// validation , getting value
+  const value = schema.validate(req.body) // coming from frontend
+  
+  if(value.error){
+    return res.json({
+          status: "error",
+          message: value.error.message
+  });
+  };
+  
+  next();
+  }
+
+
 
 
 export const newProductValidation = (req,res,next) => {
@@ -129,29 +158,29 @@ export const addCategoryValidation = (req,res,next) => {
 
 
 
-export const updateCategoryValidation = (req,res,next) => {
+// export const updateCategoryValidation = (req,res,next) => {
 
-  req.body.saleEndDate = req.body.saleEndDate === " null " ? null : req.body.saleEndDate
+//   req.body.saleEndDate = req.body.saleEndDate === " null " ? null : req.body.saleEndDate
   
-  const schema =joi.object({
-  name: shortStr.required(),
-  parentCat : shortStr.required
+//   const schema =joi.object({
+//   name: shortStr.required(),
+//   parentCat : shortStr.required
 
-  });
+//   });
   
   
-  /// validation , getting value
-  const value = schema.validate(req.body) // coming from frontend
+//   /// validation , getting value
+//   const value = schema.validate(req.body) // coming from frontend
   
-  if(value.error){
-    return res.json({
-          status: "error",
-          message: value.error.message
-  });
-  };
+//   if(value.error){
+//     return res.json({
+//           status: "error",
+//           message: value.error.message
+//   });
+//   };
   
-  next();
-}
+//   next();
+// }
   
 
 
