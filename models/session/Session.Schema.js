@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const SessionSchema = mongoose.Schema({
+export const SchemaSession = mongoose.Schema({
     accessJWT: {
         type: String ,
         require: true ,
@@ -20,7 +20,7 @@ export const SessionSchema = mongoose.Schema({
 
 );
 
-const SessionSchema = mongoose.model("Session", SessionSchema)
+const SessionSchema = mongoose.model("Session", SchemaSession);
 export default SessionSchema;
 
 

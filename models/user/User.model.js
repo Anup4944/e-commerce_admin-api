@@ -31,15 +31,29 @@ export const getUserByEmail = (email) => {
 })
 }
 
-
+export const getUserById = _id => {
+    return new Promise((resolve, reject) =>{    
+    try {
+        UserSchema.findById({_id})
+        
+        .then(data => resolve(data))
+        .catch(error => reject(error));
+    
+    } catch (error) {
+        reject(error)
+        
+    }
+})
+}
 
 export const storeRefreshJWT = (_id, token) => {
     return new Promise((resolve, reject) =>{    
     try {
-        UserSchema
-        .findOneAndUpdate({_id},{
-            $set: {token}
-        },{new:true})
+        UserSchema.findOneAndUpdate(
+            {_id},
+            {$set: {"refreshJWT.token" : token, 
+            "refreshJWT.addedAt": Date.now()}},
+            {new:true})
         .then(data => resolve(data))
         .catch(error => reject(error));
     
@@ -48,3 +62,5 @@ export const storeRefreshJWT = (_id, token) => {
     }
 })
 }
+
+

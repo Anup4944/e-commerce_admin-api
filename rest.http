@@ -12,8 +12,20 @@ Content-Type: application/json
     
 }
 
-###login api end point
-PUT  http://localhost:8000/api/v1/login
+###user routers
+### get usr by id
+GET http://localhost:8000/api/v1/user/6084ccdfeb6bd33c747aa020
+Authorization: 
+{
+    Header:
+}
+
+
+
+
+###users router
+### create a user
+POST http://localhost:8000/api/v1/user
 Content-Type: application/json
 
 {
@@ -21,7 +33,7 @@ Content-Type: application/json
     "password": "12345",
     "fname":"Anup",
     "lname": "Poudel",
-    "role": "admin"
+    "role": "user"
     
 }
 

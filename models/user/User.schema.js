@@ -35,8 +35,9 @@ export const UserSchema = mongoose.Schema({
 
         },
         addedAt:{
-            type: Date,
-            default: Date.row()
+        type: Date,
+        required: true,
+        default: Date.now()
         
         }
     }
