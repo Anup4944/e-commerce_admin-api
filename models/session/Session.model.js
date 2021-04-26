@@ -12,3 +12,17 @@ export const storeAccessJwt = async (newSession) =>{
         }
     
 }
+
+
+export const getAccessJwtByToken = async (accessJWT) =>{
+   
+        try {
+        const result = await SchemaSession.findOne({accessJWT});
+        return Promise.resolve( result);
+            
+        } catch (error) {
+           console.log(error);
+           return Promise.resolve(false)  
+        }
+    
+}

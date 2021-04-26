@@ -2,8 +2,9 @@ import express, { Router } from 'express'
 const router = express.Router()
 import { hashPassword } from "../helpers/bcrypt.helper.js";
 import {newUserValidation} from "../middlewares/formValidation.js";
+import { userAuthorization } from "../middlewares/authorization.middleware.js";
 import {  createUser } from "../models/user/User.model.js";
-
+import {verifyAccessJwt}from "../helpers/jwt.helper.js"
 
 
 
@@ -12,17 +13,19 @@ router.all("*" , (req, res,next) =>{
     next();
 })
 
-router.get("/_id",async(req,res) =>{
-    const {authorization} = req.headers;
+router.get("/_id",userAuthorization,async(req,res) =>{
+    
     
     try {
-        const {_id } = req.params;
+       
+    const {_id } = req.params;
     if(!_id){
         return res.send({
             status: "error", 
             message: "Invalid request",
         });
     }
+
 
     const user = await getUserById(_id)
     if (user) user.password = undefined;

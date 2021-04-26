@@ -41,12 +41,24 @@ export const createRefreshJWT = (email , _id) =>{
 export const verifyAccessJwt = accessJWT => {
     try {
     const  decoded = jwt.verify(access.JWI, process.env.JWT_ACCESS_SECRET);
-    return 
+   
+    return Promise.resolve(decoded);
         
     } catch (error) {
-        reject(error)
+    return Promise.reject(false)
         
     }
 }
-/// store in db 
+
+export const verifyRefreshJwt = refreshJWT => {
+    try {
+    const  decoded = jwt.verify(access.JWI, process.env.JWT_REFRESH_SECRET);
+   
+    return Promise.resolve(decoded);
+        
+    } catch (error) {
+    return Promise.reject(error)
+        
+    }
+}
 
