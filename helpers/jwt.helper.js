@@ -11,7 +11,7 @@ export const createAccessJWT =  (email,_id) => {
 
             if(accessJWT){
             const newSession = {accessJWT, userId: _id }
-            storeAccessJwt(_id, refreshJWT)
+            storeAccessJwt(newSession, _id)
             }
             resolve(accessJWT);
             
@@ -27,7 +27,8 @@ export const createRefreshJWT = (email , _id) =>{
     return new Promise( async (resolve, reject) => {
         try {
             const refreshJWT = await jwt.sign({email}, process.env.JWT_REFRESH_SECRET, {expiresIn:"30d"})
-            storeRefreshJWT()
+ 
+            storeRefreshJWT({refreshJWT, _id})
             resolve(refreshJWT)
 
             
@@ -52,12 +53,12 @@ export const verifyAccessJwt = accessJWT => {
 
 export const verifyRefreshJwt = refreshJWT => {
     try {
-    const  decoded = jwt.verify(access.JWI, process.env.JWT_REFRESH_SECRET);
+    const  decoded = jwt.verify(refreshJWT, process.env.JWT_REFRESH_SECRET);
    
     return Promise.resolve(decoded);
         
     } catch (error) {
-    return Promise.reject(error)
+    return Promise.reject(false)
         
     }
 }

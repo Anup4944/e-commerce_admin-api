@@ -30,7 +30,6 @@ export const UserSchema = mongoose.Schema({
     refreshJWT:{
         token :{
         type: String,
-        required: true,
         default: ""
 
         },

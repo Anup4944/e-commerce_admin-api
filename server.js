@@ -25,14 +25,16 @@ import loginRouter from "./routers/login.router.js";
 import userRouter from "./routers/user.router.js";
 import categoryRouter from "./routers/Category.router.js";
 import productRouter from "./routers/Product.router.js";
+import tokenRouter from "./routers/Token.router.js";
 import userAuthorization from "./middlewares/authorization.middleware.js";
 
 
 
 //  USE API'S
 app.use('/api/v1/login', loginRouter); 
-app.use('/api/v1/user', userAuthorization,userRouter); 
+app.use('/api/v1/user', userRouter); 
 app.use('/api/v1/category', categoryRouter);
+app.use('/api/v1/token', tokenRouter);
 app.use('/api/v1/product', productRouter);
  
 app.get('/', function (req, res) {

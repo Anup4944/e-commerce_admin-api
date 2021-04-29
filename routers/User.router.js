@@ -70,7 +70,7 @@ router.post("/", newUserValidation, async (req,res) =>{
      res.json({status:"error" , message:"invalid login details"})
       
     } catch (error) {
-       
+  
         if(error.message.includes("duplicate key error collection")){
         return res.json({status : "error" , message: "This email already exist" })
      }

@@ -7,9 +7,13 @@ export const createUser = (userObj) => {
     try {
         UserSchema(userObj).save()
         .then(data => resolve(data))
-        .catch(error => reject(error));
+        .catch(error =>{
+            console.log(error)
+            reject(error)
+        });
     
     } catch (error) {
+            console.log(error)
         reject(error)
     }
 })
@@ -46,7 +50,7 @@ export const getUserById = _id => {
 })
 }
 
-export const storeRefreshJWT = (_id, token) => {
+export const storeRefreshJWT = ({_id, token}) => {
     return new Promise((resolve, reject) =>{    
     try {
         UserSchema.findOneAndUpdate(
@@ -63,4 +67,19 @@ export const storeRefreshJWT = (_id, token) => {
 })
 }
 
+export const getUserByEmailAndRefreshJWT =( {email, refreshJWT}) => {
+    return new Promise((resolve, reject) =>{    
+    try {
+        UserSchema.findOne({email,
+        "refreshJWT.token" : refreshJWT,})
+        
+        .then(data => resolve(data))
+        .catch(error => reject(false));
+    
+    } catch (error) {
+        reject(error)
+        
+    }
+})
+}
 

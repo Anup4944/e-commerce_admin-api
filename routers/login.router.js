@@ -20,33 +20,36 @@ router.post("/", loginValidation, async (req,res) =>{
      
         console.log(user);
         if(user?._id){
-            return res
-            .status(404)
-            .json({status:"error" , message: "invalid login details"})
-        }
-     
-        const dbHashPass = user.password;
-        const result = await comparePassword(password, dbHashPass);
-        console.log(result)
 
-        if(!result){
-            return res.json({status:"error" , message:"invalid login details"})
-        }
-        // create  access JWT and refreshJWT
-     
-        user.password = "";
+                 
+        const dbHashPass = user.password;
+        const result = await comparePassword(password, dbHashPass); 
+        
+        if(result){
+            user.password = "";
      
         const accessJWT = await createAccessJWT(user.email, user._id);
         const refreshJWT = await createRefreshJWT(user.email, user._id);
         user.password = undefined; 
-        user.refreshJWT = undefined;
+        user.refreshJWT = {};
 
-        res.json({
+
+        return res.json({
             status: "success",
-            message: "login success",
+            message: "The user has been authentication.",
             user,
             accessJWT,
             refreshJWT,
+
+        });
+        } 
+        }
+ 
+
+        res.json({
+            status: "error",
+            message: "Invalid login details",
+            
         });
         
     } catch (error) {

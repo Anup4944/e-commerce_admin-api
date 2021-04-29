@@ -13,7 +13,7 @@ export const getUserSession =  (accessJWT) => {
 export const userAuthorization = async (req, res, next) =>{
     try {
         const {authorization} = req.headers;
-        const verifyToken =  verifyAccessJwt(authorization);
+        const verifyToken = await verifyAccessJwt(authorization);
         console.log(">>>>>>",verifyToken);
 
 

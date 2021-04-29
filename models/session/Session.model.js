@@ -2,14 +2,17 @@ import  SchemaSession  from './Session.Schema.js'
 
 
 export const storeAccessJwt = async (newSession) =>{
-   
+   return new Promise(async (resolve, reject)=>{
         try {
-        const result = await SchemaSession(newSession).save();
-        return result;
-            
-        } catch (error) {
-           console.log(error);  
-        }
+                const result = await SchemaSession(newSession).save();
+                resolve(result);
+                    
+                } catch (error) {
+                   console.log(error);  
+                   reject(error)
+                }
+   })
+       
     
 }
 
