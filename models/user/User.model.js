@@ -90,3 +90,6 @@ export const deleteRefreshJwtByUserId = (_id) => {
 		}
 	
 };
+
+
+export default getUserById;

@@ -2,10 +2,9 @@ import express from "express";
 const router = express.Router();
 
 import { hashPassword } from "../helpers/bcrypt.helper.js";
-import { verifyAccessJwt } from "../helpers/jwt.helper.js";
 import { userAuthorization } from "../middlewares/authorization.middleware.js";
 import { newUserValidation } from "../middlewares/formValidation.middleware.js";
-import { createUser, deleteRefreshJwtByUserId, getUserById } from "../models/user/User.model.js";
+import { createUser, deleteRefreshJwtByUserId, getUserByEmail, getUserById } from "../models/user/User.model.js";
 
 router.all("*", (req, res, next) => {
 	next();
@@ -99,6 +98,32 @@ router.post("/logout", async (req, res) => {
 		res.send({
 			status: "error",
 			message: "Oops something went wrong!!!",
+		})
+	}
+});
+
+router.post("/otp", async (req, res) => {
+	try {
+		const {_id} = req.body;
+		// get user based on the email
+		const admin = await getUserByEmail(email);
+		
+		
+		
+		/////////////////////////////////////////////////////////
+
+		console.log(adminUser);
+		res.send({
+			status: "success",
+			message: "If your email is found, we will send you the email. It may take up to 5 minutes, please check your junk email "
+
+		})
+
+	} catch (error) {
+		console.log(error);
+		res.send({
+			status: "error",
+			message: "Error! There is some problem in our system, please try again later.",
 		})
 	}
 });
