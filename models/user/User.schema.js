@@ -1,50 +1,52 @@
+import mongoose from "mongoose";
 
-import mongoose  from "mongoose";
+const UserSchema = mongoose.Schema(
+	{
+		fName: {
+			type: String,
+			require: true,
+			default: "",
+		},
+		lName: {
+			type: String,
+			require: true,
+			default: "",
+		},
 
-export const UserSchema = mongoose.Schema({
-    fname:{
-        type: String,
-        required: true,
-        default: ""
-    },
-    lname:{
-        type: String,
-        required: true,
-        default: ""
-    },
-    role:{
-        type: String,
-        required: true,
-        default: "guest"
-    },
-    email:{
-        type: String,
-        required: true,
-        default: ""
-    },
-    password:{
-        type: String,
-        required: true,
-        default: ""
-    },
-    refreshJWT:{
-        token :{
-        type: String,
-        default: ""
+		role: {
+			type: String,
+			require: true,
+			default: "guest",
+		},
 
-        },
-        addedAt:{
-        type: Date,
-        required: true,
-        default: Date.now()
-        
-        }
-    }
+		email: {
+			type: String,
+			require: true,
+			default: "",
+		},
+		password: {
+			type: String,
+			require: true,
+			default: "",
+		},
+		refreshJWT: {
+			token: {
+				type: String,
+				require: true,
+				default: "",
+			},
+			addedAt: {
+				type: Date,
+				require: true,
+				default: Date.now(),
+			},
+		},
+	},
+	{
+		timestamp: true,
+	}
+);
 
-},
-{
-    timestamp: true, 
-});
+const UsersSchema = mongoose.model("User", UserSchema);
 
- const UsersSchema = mongoose.model("User", UserSchema);
- export default UsersSchema;
+export default UsersSchema;

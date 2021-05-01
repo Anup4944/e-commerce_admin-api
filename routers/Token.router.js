@@ -1,73 +1,62 @@
-import express, { Router } from 'express'
-const router = express.Router();
-import { storeRefreshJWT } from "../models/user/User.model.js";
-import { verifyRefreshJwt } from "../helpers/jwt.helper.js";
+import express from "express";
 import { getUserByEmailAndRefreshJWT } from "../models/user/User.model.js";
+import { verifyRefreshJwt, createAccessJWT } from "../helpers/jwt.helper.js";
+const router = express.Router();
 
-router.all("*" , (req,res , next) =>  {
-    next()
-})
+router.all("*", (req, res, next) => {
+	next();
+});
 
+//receive refreshJWT and return new accessJWT
+router.get("/", async (req, res) => {
+	try {
+		const { authorization } = req.headers;
+		if (authorization) {
+			// Process: call the function to get the accessjwt
 
-// get refreshJWT and return new accessJWT
- router.get("/", async (req,res) => {
-     try {
-         const  {authorization} = req.headers;
-         if(!authorization){
-             return res.status(403).json({
-                 status: "error",
-                 message: "Unauthorized !"
+			// 1. verify storeRefreshJWT
+			const { email } = await verifyRefreshJwt(authorization);
 
-             })
-         }
- 
+			// 3. find out the user who the code belongs to
+			if (email) {
+				// 2. check if it is in the database
+				const user = await getUserByEmailAndRefreshJWT({
+					email,
+					refreshJWT: authorization,
+				});
 
-    // call the function to get the accessJWT
-    //  1. verify storeRefreshJWT
-    const decodeJwt = await verifyRefreshJwt(authorization);
- 
-    if(decodeJwt.email){
+				if (user._id) {
+					const tokenExp = user.refreshJWT.addedAt;
+					tokenExp.setDate(
+						tokenExp.getDate() + +process.env.JWT_REFRESH_SECRET_EXP_DAY
+					);
+					const today = Date.now();
+					// check if token is still valid
+					if (tokenExp > today) {
+						// 4. cretae new accessJWT and store in the seesion table in BD
+						const accessJwt = await createAccessJWT(email, user._id);
+						return res.json({
+							status: "success",
+							message: "Here is your new accessJWT",
+							accessJwt,
+						});
 
-         //  2. check if it is in the db
+						// 3. find out the user who the code belongs to
+					}
+				}
+			}
+		}
 
-         const user = await getUserByEmailAndRefreshJWT({
-             email:decodeJwt.email,
-            refreshJwt: authorization})
+		res.status(403).json({
+			status: "error",
+			message: "Unauthorized!",
+		});
+	} catch (error) {
+		res.status(403).json({
+			status: "error",
+			message: "Unauthorized!",
+		});
+	}
+});
 
-        return res.json({
-            status: "success",
-            message: "Here is your new accessJWT",
-            user,
-
-        })
-    }
-
-
-
-   
-    //  3. Find out the user who the code belongs to
-    //  4. Create new JWT and store inthe session db
-    //  5. Respond back to
-
-    return res.statusCode(403).json({
-        status: "error",
-        message: "Unauthorized -"
-
-    })
-
- 
-         
-     } catch (error) {
-        console.log(error)
-        res.status(403).json({
-        status: "error",
-        message: "Unauthorized"
-
-        })
-    
-     }
- });
-
-
-
- export default router;
+export default router;
