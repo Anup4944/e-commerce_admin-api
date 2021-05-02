@@ -13,11 +13,11 @@ Content-Type: application/json
 
 
 
+
 ###user routers
 ### get user by id
 GET  http://localhost:8000/api/v1/user
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJAYy5jb20iLCJpYXQiOjE2MTkzMzEzOTgsImV4cCI6MTYxOTMzMjI5OH0.WNtMXrl47zNzzEZndRV7mAbQJ785SKKQpWnPVirBc0A
-
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJAYy5jb20iLCJpYXQiOjE2MTk4Mzk5OTksImV4cCI6MTYxOTg0MDg5OX0.jO4-IgTk7gVsabnEsX2H9dI5O9vlo_b1CnScPGusDMo
 
 ### Create a user
 POST http://localhost:8000/api/v1/user
@@ -32,18 +32,15 @@ Content-Type: application/json
 }
 
 
-### logout and enpoitn api 
-DELETE http://localhost:8000/api/v1/user/logout 
+### logout api endpoing
+POST http://localhost:8000/api/v1/user/logout
 Content-Type: application/json
-{
-  
-}
 
-
+{"_id": "6084f1fea2d7e03e8465907e" }
 
 
 ### Categor Zone ####
-### Fetch all category
+### F\
 GET  http://localhost:8000/api/v1/category
  
 
@@ -88,5 +85,3 @@ GET   http://localhost:8000/api/v1/product/607a850e263dc01ac00d540c
 # Request fresh accessJWt
 GET  http://localhost:8000/api/v1/token
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJAYy5jb20iLCJpYXQiOjE2MTk0ODI3NDAsImV4cCI6MTYyMjA3NDc0MH0.Ug2GZHZXlcP1zxjUcCA_Hkea047-Yzb1R_bCKnacABY
-
-

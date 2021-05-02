@@ -1,4 +1,3 @@
-
 import SessionSchema from "./Session.schema.js";
 
 export const storeAccessJwt = async newSession => {
@@ -21,16 +20,13 @@ export const getAccessJwtByToken = async accessJWT => {
 	}
 };
 
-
-export const deleteAccessJwtByUserId= _id  => {
+export const deleteAccessJwtByUserId = userId => {
+	console.log("from d a ", userId);
 	try {
-		const result =  SessionSchema.findOneAndDelete(_id);		
+		SessionSchema.findOneAndDelete(userId)
+			.then(data => {})
+			.catch(error => console.log(error));
 	} catch (error) {
 		console.log(error);
-		
 	}
 };
-
-
-
-
